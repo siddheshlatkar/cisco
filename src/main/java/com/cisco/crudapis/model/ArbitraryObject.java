@@ -40,15 +40,10 @@ public class ArbitraryObject {
   }
 
   public String getAsRawJSON() {
-    this.arbitraryObjectFields.append("uid", this.id);
-    return this.arbitraryObjectFields.toJson();
-//    JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-//    jsonObjectBuilder.add("uid", this.id);
-//
-//    for (Entry<String, Object> entry: this.arbitraryObjectFields.entrySet()) {
-//      jsonObjectBuilder.add(entry.getKey(), entry.getValue() == null ? "" : entry.getValue().toString());
-//    }
-//    return jsonObjectBuilder.build();
+    if (this.id != null && !this.arbitraryObjectFields.containsKey("uid")) {
+      this.arbitraryObjectFields.append("uid", this.id);
+    }
+    return this.arbitraryObjectFields != null ? this.arbitraryObjectFields.toJson() : "";
   }
 
   public void setId(String id) {

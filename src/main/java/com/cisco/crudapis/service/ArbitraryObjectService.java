@@ -23,10 +23,22 @@ public class ArbitraryObjectService {
   }
 
   public ArbitraryObject find(String uid) {
+    if (!arbitraryObjectRepository.existsById(uid)) {
+      return new ArbitraryObject();
+    }
     return arbitraryObjectRepository.findById(uid).get();
   }
 
   public List<ArbitraryObject> findAll() {
     return arbitraryObjectRepository.findAll();
+  }
+
+  public ArbitraryObject update(String uid, Document document) {
+    arbitraryObjectRepository.deleteById(uid);
+    return arbitraryObjectRepository.save(new ArbitraryObject(uid, document));
+  }
+
+  public void delete(String uid) {
+    arbitraryObjectRepository.deleteById(uid);
   }
 }
