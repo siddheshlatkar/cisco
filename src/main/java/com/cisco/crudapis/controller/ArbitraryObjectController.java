@@ -31,7 +31,7 @@ public class ArbitraryObjectController {
 
     if (!isValidJSON(arbitraryObjectJSON)) {
       JsonObject errorJson = Json.createObjectBuilder().add("verb", "POST")
-              .add("url", "https://myrestapp.cisco.com/api/objects/")                               //TODO change this after you deploy
+              .add("url", "cisco-crud.us-east-1.elasticbeanstalk.com/api/objects/")
               .add("message", "Not a JSON object")
               .build();
       return new ResponseEntity(errorJson.toString(), HttpStatus.BAD_REQUEST);
@@ -57,7 +57,7 @@ public class ArbitraryObjectController {
     List<ArbitraryObject> arbitraryObjects = arbitraryObjectService.findAll();
     List<JsonObject> uids = new ArrayList();
     for (ArbitraryObject object: arbitraryObjects) {
-      JsonObject jsonObject = Json.createObjectBuilder().add("uid", "localhost:8080/api/objects/" + object.getId()).build();
+      JsonObject jsonObject = Json.createObjectBuilder().add("uid", "cisco-crud.us-east-1.elasticbeanstalk.com/api/objects/" + object.getId()).build();
       uids.add(jsonObject);
     }
     return new ResponseEntity(uids.toString(), HttpStatus.OK);
@@ -68,7 +68,7 @@ public class ArbitraryObjectController {
 
     if (!isValidJSON(arbitraryObjectJSON)) {
       JsonObject errorJson = Json.createObjectBuilder().add("verb", "PUT")
-              .add("url", "https://myrestapp.cisco.com/api/objects/" + uid)
+              .add("url", "cisco-crud.us-east-1.elasticbeanstalk.com/api/objects/")
               .add("message", "Not a JSON object")
               .build();
       return new ResponseEntity(errorJson.toString(), HttpStatus.BAD_REQUEST);

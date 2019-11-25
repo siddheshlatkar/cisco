@@ -83,7 +83,7 @@ public class ArbitraryObjectControllerTest {
             .andExpect(status().isBadRequest())
             .andReturn().getResponse().getContentAsString();
 
-    assertEquals("{\"verb\":\"POST\",\"url\":\"https://myrestapp.cisco.com/api/objects/\",\"message\":\"Not a JSON object\"}", responseJson);
+    assertEquals("{\"verb\":\"POST\",\"url\":\"cisco-crud.us-east-1.elasticbeanstalk.com/api/objects/\",\"message\":\"Not a JSON object\"}", responseJson);
   }
 
   @Test
@@ -142,6 +142,6 @@ public class ArbitraryObjectControllerTest {
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
 
-    assertEquals("[{\"uid\":\"localhost:8080/api/objects/123abc123\"}, {\"uid\":\"localhost:8080/api/objects/mnb567mnb456\"}]", responseJson);
+    assertEquals("[{\"uid\":\"cisco-crud.us-east-1.elasticbeanstalk.com/api/objects/123abc123\"}, {\"uid\":\"cisco-crud.us-east-1.elasticbeanstalk.com/api/objects/mnb567mnb456\"}]", responseJson);
   }
 }
