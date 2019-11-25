@@ -2,7 +2,6 @@ package com.cisco.crudapis.controller;
 
 import com.cisco.crudapis.model.ArbitraryObject;
 import com.cisco.crudapis.service.ArbitraryObjectService;
-
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,12 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.json.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.json.JsonObject;
 
 @RestController
@@ -32,22 +28,27 @@ public class ArbitraryObjectController {
 
   @PostMapping(path = "api/objects")
   public ResponseEntity<ArbitraryObject> create(@RequestBody String arbitraryObjectJSON) {
-    if (!isValidJSON(arbitraryObjectJSON)) {
 
+    if (!isValidJSON(arbitraryObjectJSON)) {
       JsonObject errorJson = Json.createObjectBuilder().add("verb", "POST")
-              .add("url", "https://myrestapp.cisco.com/api/objects/")
+              .add("url", "https://myrestapp.cisco.com/api/objects/")                               //TODO change this after you deploy
               .add("message", "Not a JSON object")
               .build();
-
       return new ResponseEntity(errorJson.toString(), HttpStatus.BAD_REQUEST);
     }
+
     ArbitraryObject arbitraryObject = arbitraryObjectService.create(arbitraryObjectJSON);
-    return new ResponseEntity(arbitraryObject.getAsRawJSON(), HttpStatus.OK);
+    return new ResponseEntity(arbitraryObject.getAsRawJSON(), HttpStatus.CREATED);
   }
 
   @GetMapping(path = "api/objects/{uid}")
   public ResponseEntity<ArbitraryObject> get(@PathVariable("uid") String uid) {
+
     ArbitraryObject arbitraryObject = arbitraryObjectService.find(uid);
+
+    if (arbitraryObject == null) {
+      return new ResponseEntity("", HttpStatus.NO_CONTENT);
+    }
     return new ResponseEntity(arbitraryObject.getAsRawJSON(), HttpStatus.OK);
   }
 
@@ -64,16 +65,15 @@ public class ArbitraryObjectController {
 
   @PutMapping(path = "api/objects/{uid}")
   public ResponseEntity<ArbitraryObject> update(@PathVariable("uid") String uid, @RequestBody String arbitraryObjectJSON) {
-    if (!isValidJSON(arbitraryObjectJSON)) {
 
+    if (!isValidJSON(arbitraryObjectJSON)) {
       JsonObject errorJson = Json.createObjectBuilder().add("verb", "PUT")
               .add("url", "https://myrestapp.cisco.com/api/objects/" + uid)
               .add("message", "Not a JSON object")
               .build();
-
       return new ResponseEntity(errorJson.toString(), HttpStatus.BAD_REQUEST);
-
     }
+
     ArbitraryObject updatedArbitraryObject = arbitraryObjectService.update(uid, Document.parse(arbitraryObjectJSON));
     return new ResponseEntity(updatedArbitraryObject.getAsRawJSON(), HttpStatus.OK);
   }

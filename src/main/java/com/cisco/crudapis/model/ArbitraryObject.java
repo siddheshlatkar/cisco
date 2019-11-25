@@ -4,12 +4,9 @@ package com.cisco.crudapis.model;
 //TODO - Think about JSON under another JSON.
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Map.Entry;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.json.*;
 
 @Document("ArbitraryObject")
 public class ArbitraryObject {
@@ -18,13 +15,14 @@ public class ArbitraryObject {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private String id;
 
-  org.bson.Document arbitraryObjectFields;
+  private org.bson.Document arbitraryObjectFields;
 
-  public ArbitraryObject(String arbitraryObjectFields) {
-    this.arbitraryObjectFields = org.bson.Document.parse(arbitraryObjectFields);
+  public ArbitraryObject() {
   }
 
-  public ArbitraryObject() {}
+  public ArbitraryObject(String arbitraryObjectFields) throws org.bson.json.JsonParseException {
+    this.arbitraryObjectFields = org.bson.Document.parse(arbitraryObjectFields);
+  }
 
   public ArbitraryObject(String id, org.bson.Document arbitraryObjectFields) {
     this.id = id;
@@ -40,7 +38,7 @@ public class ArbitraryObject {
   }
 
   public String getAsRawJSON() {
-    if (this.id != null && !this.arbitraryObjectFields.containsKey("uid")) {
+    if (this.id != null && !this.arbitraryObjectFields.containsKey("id")) {
       this.arbitraryObjectFields.append("uid", this.id);
     }
     return this.arbitraryObjectFields != null ? this.arbitraryObjectFields.toJson() : "";

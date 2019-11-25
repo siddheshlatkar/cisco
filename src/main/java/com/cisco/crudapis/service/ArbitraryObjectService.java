@@ -2,12 +2,9 @@ package com.cisco.crudapis.service;
 
 import com.cisco.crudapis.model.ArbitraryObject;
 import com.cisco.crudapis.repository.ArbitraryObjectRepository;
-
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -24,7 +21,7 @@ public class ArbitraryObjectService {
 
   public ArbitraryObject find(String uid) {
     if (!arbitraryObjectRepository.existsById(uid)) {
-      return new ArbitraryObject();
+      return null;
     }
     return arbitraryObjectRepository.findById(uid).get();
   }
@@ -34,7 +31,6 @@ public class ArbitraryObjectService {
   }
 
   public ArbitraryObject update(String uid, Document document) {
-    arbitraryObjectRepository.deleteById(uid);
     return arbitraryObjectRepository.save(new ArbitraryObject(uid, document));
   }
 
