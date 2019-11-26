@@ -1,13 +1,13 @@
 package com.cisco.crudapis.model;
 
-//TODO - Think about empty json
-//TODO - Think about JSON under another JSON.
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Represents Arbitrary object to be used in CRUD APIs.
+ */
 @Document("ArbitraryObject")
 public class ArbitraryObject {
 
@@ -37,6 +37,10 @@ public class ArbitraryObject {
     return arbitraryObjectFields;
   }
 
+  /**
+   * Returns Arbitrary object as a Json.
+   * @return  Arbitrary object as a Json.
+   */
   public String getAsRawJSON() {
     if (this.id != null && !this.arbitraryObjectFields.containsKey("id")) {
       this.arbitraryObjectFields.append("uid", this.id);
