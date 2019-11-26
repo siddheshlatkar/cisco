@@ -5,10 +5,7 @@
 - Application uses junit, mockito for testing
 
 #### Build
-- Run ```mvn clean install``` to build the project
-
-## Run
-mvn spring-boot:run
+- Run ```mvn clean install``` to build the project.
 
 #### Run
 - Run ```mvn spring-boot:run```
